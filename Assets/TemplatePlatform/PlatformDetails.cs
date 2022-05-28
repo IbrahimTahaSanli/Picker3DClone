@@ -11,6 +11,8 @@ public class PlatformDetails : MonoBehaviour
     [SerializeField] private GameObject BallPrefab;
     [SerializeField] private Transform Env;
 
+    [SerializeField] private MeshFilter PlatformMeshFilter;
+
     public enum PlatformStyle
     {
         Empty = 0,
@@ -24,17 +26,22 @@ public class PlatformDetails : MonoBehaviour
 
     private void Awake()
     {
+
+
         //Const subtractions for padding to sides
-        this.platformScale = new Vector2(this.transform.localScale.x - 1, this.transform.localScale.z - 2 );
-        this.style = (PlatformStyle)Random.Range(0, 3);
-        Debug.Log(this.style);
+        this.platformScale = new Vector2(this.PlatformMeshFilter.mesh.bounds.extents.x * 2 - 1, this.PlatformMeshFilter.mesh.bounds.extents.y * 2 - 2 );
+        this.style = (PlatformStyle)Random.Range(1, 2);
+
         switch (this.style)
         {
             case PlatformStyle.Empty:
                 break;
             case PlatformStyle.Sin:
                 for (int i = 0; i < this.platformScale.x; i++)
-                    CreateEnvItem(EnvItems.BasicBall, i, Mathf.Sin(i*5/this.platformScale.y) * this.platformScale.y / 2);
+                {
+                    Debug.Log(Mathf.Sin(i * 5 / this.platformScale.y));
+                    CreateEnvItem(EnvItems.BasicBall, i, Mathf.Sin(i * 5 / this.platformScale.y) * this.platformScale.y / 2);
+                }
                 break;
             case PlatformStyle.Cos:
                 for (int i = 0; i < this.platformScale.x; i++)
@@ -64,7 +71,7 @@ public class PlatformDetails : MonoBehaviour
         }
 
         retObj.transform.SetParent(Env);
-        retObj.transform.localPosition = new Vector3(x / this.platformScale.x, 3, z / (this.platformScale.y + 5));
+        retObj.transform.localPosition = new Vector3(x, 3, z);
         return retObj;
     }
 

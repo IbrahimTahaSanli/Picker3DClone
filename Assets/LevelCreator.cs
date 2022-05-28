@@ -50,7 +50,7 @@ public class LevelCreator : MonoBehaviour
         float lastPosition = platforms[0].transform.position.x;
         for(int i = 1; i < platforms.Length; i++)
         {
-            lastPosition += platforms[i-1].transform.localScale.x / 2 + platforms[i].transform.localScale.x / 2;
+            lastPosition += platforms[i - 1].GetComponent<MeshFilter>().mesh.bounds.extents.x + platforms[i].GetComponent<MeshFilter>().mesh.bounds.extents.x;
             platforms[i].transform.position = new Vector3(lastPosition, 0, 0);
         }
 
