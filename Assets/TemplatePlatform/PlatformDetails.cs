@@ -17,6 +17,11 @@ public class PlatformDetails : MonoBehaviour
 
     [SerializeField] private AnimAbstractClass platformAnim;
 
+    public void StartAnim()
+    {
+        this.platformAnim.PlayAnim();
+    }
+
     public enum PlatformStyle
     {
         Empty = 0,

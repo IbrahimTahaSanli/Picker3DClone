@@ -17,6 +17,8 @@ public class ScoreManager : MonoBehaviour
     {
         _instance = this;
 
+
+        this.ScoreAddedEvents = new Dictionary<ScoreAddedEvent, bool>();
         this.AddMaxScoreChangedChangeEvent(
             (val) => {
                 this.maxScore = val;
@@ -24,6 +26,7 @@ public class ScoreManager : MonoBehaviour
                 }
         );
 
+        this.MaxScoreChangedEvents = new Dictionary<MaxScoreChangedEvent, bool>();
         this.AddScoreChangeEvent(
             (val) => {
                 if (this.maxScore < val)

@@ -14,6 +14,9 @@ public class MainManager : MonoBehaviour
     [SerializeField] private float thingyXSpeed;
 
     [SerializeField] private GameObject startCanvas;
+    [SerializeField] private GameObject inGameCanvas;
+
+
     [SerializeField] private Transform thingy;
 
     [SerializeField] private Camera camera;
@@ -23,11 +26,27 @@ public class MainManager : MonoBehaviour
     {
         StartScreen = 0,
         InGame = 1,
+        InCheckpoint = 2,
     }
 
     private ControlScheme currentControlScheme;
 
-    
+    public void ThingyGetIntoCheckPoint(GameObject checkpoint)
+    {
+        this.currentControlScheme = ControlScheme.InCheckpoint;
+
+        StartCoroutine(this.WaitForCheckpoint(checkpoint));
+    }
+
+    private IEnumerator WaitForCheckpoint(GameObject checkpoint)
+    {
+        yield return new WaitForSeconds(1);
+
+        checkpoint.transform.parent.GetComponent<PlatformDetails>().StartAnim();
+
+    }
+
+
     void Start()
     {
         _instance = this;
@@ -66,6 +85,8 @@ public class MainManager : MonoBehaviour
                 this.thingy.position = Vector3.Lerp(this.thingy.position, new Vector3(this.thingy.position.x + this.thingyXSpeed, this.thingy.position.y, thingyMoveAreaWidth * this.inputPosInX), Time.deltaTime * this.thingyGeneralSpeed);
                 this.camera.transform.position = new Vector3(this.thingy.position.x + this.thingyXSpeed - this.cameraXPos, this.camera.transform.position.y, this.camera.transform.position.z);
                 break;
+            default:
+                break;
         }
     }
 
@@ -73,6 +94,7 @@ public class MainManager : MonoBehaviour
     private void startGame()
     {
         startCanvas.SetActive(false);
+        inGameCanvas.SetActive(true);
 
         LevelCreator._instance.CreateLevel(3,5);
     }
