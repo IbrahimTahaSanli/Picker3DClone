@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2427359239746850775}
   - component: {fileID: 5242279066417418126}
   - component: {fileID: 3609544809460285823}
-  - component: {fileID: 197623437031480350}
   - component: {fileID: 6237391036855750096}
+  - component: {fileID: 2376696715207162237}
   m_Layer: 0
   m_Name: StartPlatform
   m_TagString: Untagged
@@ -83,19 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &197623437031480350
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1215188161585252875}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6237391036855750096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,3 +99,16 @@ MonoBehaviour:
   Env: {fileID: 0}
   PlatformMeshFilter: {fileID: 0}
   style: 0
+--- !u!65 &2376696715207162237
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1215188161585252875}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 36, y: 36.000008, z: 1.0000002}
+  m_Center: {x: 0, y: 0, z: 0}
