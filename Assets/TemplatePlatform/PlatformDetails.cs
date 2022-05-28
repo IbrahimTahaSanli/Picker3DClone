@@ -13,16 +13,20 @@ public class PlatformDetails : MonoBehaviour
 
     [SerializeField] private MeshFilter PlatformMeshFilter;
 
+    [SerializeField] private int inc = 3;
+
+    [SerializeField] private AnimAbstractClass platformAnim;
+
     public enum PlatformStyle
     {
         Empty = 0,
         Sin = 1,
         Cos = 2,
 
-
+        ShouldntBeRandomize = 99
     }
 
-    public PlatformStyle style;
+    [SerializeField] public PlatformStyle style;
 
     private void Awake()
     {
@@ -30,26 +34,24 @@ public class PlatformDetails : MonoBehaviour
 
         //Const subtractions for padding to sides
         this.platformScale = new Vector2(this.PlatformMeshFilter.mesh.bounds.extents.x * 2 - 1, this.PlatformMeshFilter.mesh.bounds.extents.y * 2 - 2 );
-        this.style = (PlatformStyle)Random.Range(1, 2);
+        this.style = style == PlatformStyle.ShouldntBeRandomize? PlatformStyle.ShouldntBeRandomize:(PlatformStyle)Random.Range(0, 3);
 
         switch (this.style)
         {
             case PlatformStyle.Empty:
                 break;
             case PlatformStyle.Sin:
-                for (int i = 0; i < this.platformScale.x; i++)
-                {
-                    Debug.Log(Mathf.Sin(i * 5 / this.platformScale.y));
+                for (int i = 0; i < this.platformScale.x; i+=this.inc)
                     CreateEnvItem(EnvItems.BasicBall, i, Mathf.Sin(i * 5 / this.platformScale.y) * this.platformScale.y / 2);
-                }
+                this.ballCount = (uint)(this.platformScale.x / this.inc + 1);
                 break;
             case PlatformStyle.Cos:
-                for (int i = 0; i < this.platformScale.x; i++)
+                for (int i = 0; i < this.platformScale.x; i +=this.inc)
                     CreateEnvItem(EnvItems.BasicBall, i, Mathf.Cos(i * 5 / this.platformScale.y) * this.platformScale.y / 2);
+                this.ballCount = (uint)(this.platformScale.x / this.inc + 1);
                 break;
 
             default:
-                Debug.Log("Random Out");
                 break;
         }
     }

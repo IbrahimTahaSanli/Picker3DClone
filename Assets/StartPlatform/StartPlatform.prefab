@@ -98,7 +98,9 @@ MonoBehaviour:
   BallPrefab: {fileID: 0}
   Env: {fileID: 0}
   PlatformMeshFilter: {fileID: 0}
-  style: 0
+  inc: 3
+  platformAnim: {fileID: 0}
+  style: 99
 --- !u!65 &2376696715207162237
 BoxCollider:
   m_ObjectHideFlags: 0
