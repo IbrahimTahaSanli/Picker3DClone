@@ -23,7 +23,12 @@ public class PlatformDetails : MonoBehaviour
         Sin = 1,
         Cos = 2,
 
+       
+        StartPlatform = 96,
+        PhasePlatform = 97,
+        FinishPlatform = 98,
         ShouldntBeRandomize = 99
+
     }
 
     [SerializeField] public PlatformStyle style;

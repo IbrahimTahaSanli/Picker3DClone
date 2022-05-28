@@ -8,7 +8,10 @@ public class LevelCreator : MonoBehaviour
 
     [SerializeField] Transform parentOfPlatforms;
     [SerializeField] GameObject platformPrefab;
+    
     [SerializeField] GameObject startPlatform;
+    [SerializeField] GameObject phasePlatform;
+    [SerializeField] GameObject finishPlatform;
 
     private void Awake()
     {
@@ -16,17 +19,26 @@ public class LevelCreator : MonoBehaviour
     }
 
 
-    public void CreateLevel(int platformCount)
+    public void CreateLevel(int phaseCount, int platformCount)
     {
-        Debug.Log("asd");
+        for (int i = 0; i < phaseCount; i++)
+            CreatePhase(platformCount);
+    }
+
+    public void CreatePhase(int platformCount)
+    {
         PlatformDetails[] platforms = createplatforms(platformCount);
         foreach (PlatformDetails platform in platforms)
         {
-            platform.transform.SetParent(parentOfPlatforms);
+            platform.transform.SetParent(this.parentOfPlatforms);
             CurrentPlatforms._instance.AddPlatform(platform);
         }
-        GameObject nextLevel = Instantiate(startPlatform);
-        nextLevel.transform.SetParent(parentOfPlatforms);
+        GameObject phaseEnd = Instantiate(this.phasePlatform);
+        phaseEnd.transform.SetParent(this.parentOfPlatforms);
+        CurrentPlatforms._instance.AddPlatform(phaseEnd.GetComponent<PlatformDetails>());
+
+        GameObject nextLevel = Instantiate(this.startPlatform);
+        nextLevel.transform.SetParent(this.parentOfPlatforms);
         CurrentPlatforms._instance.AddPlatform(nextLevel.GetComponent<PlatformDetails>());
 
         AlignPlatforms(CurrentPlatforms._instance.GetPlatformDetails());

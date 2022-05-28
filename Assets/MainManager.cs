@@ -74,7 +74,7 @@ public class MainManager : MonoBehaviour
     {
         startCanvas.SetActive(false);
 
-        LevelCreator._instance.CreateLevel(5);
+        LevelCreator._instance.CreateLevel(3,5);
     }
 
 }

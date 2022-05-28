@@ -100,7 +100,7 @@ MonoBehaviour:
   PlatformMeshFilter: {fileID: 0}
   inc: 3
   platformAnim: {fileID: 0}
-  style: 99
+  style: 96
 --- !u!65 &2376696715207162237
 BoxCollider:
   m_ObjectHideFlags: 0
