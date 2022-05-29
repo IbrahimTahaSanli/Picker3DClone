@@ -28,20 +28,49 @@ public class LevelCreator : MonoBehaviour
     public void CreatePhase(int platformCount)
     {
         PlatformDetails[] platforms = createplatforms(platformCount);
+        uint phaseBallCount = 0;
+        
         foreach (PlatformDetails platform in platforms)
         {
             platform.transform.SetParent(this.parentOfPlatforms);
             CurrentPlatforms._instance.AddPlatform(platform);
+            phaseBallCount += platform.ballCount;
         }
+
         GameObject phaseEnd = Instantiate(this.phasePlatform);
         phaseEnd.transform.SetParent(this.parentOfPlatforms);
+        phaseEnd.GetComponent<PhasePlatformController>().setBallInPhase(phaseBallCount);
         CurrentPlatforms._instance.AddPlatform(phaseEnd.GetComponent<PlatformDetails>());
 
         GameObject nextLevel = Instantiate(this.startPlatform);
         nextLevel.transform.SetParent(this.parentOfPlatforms);
         CurrentPlatforms._instance.AddPlatform(nextLevel.GetComponent<PlatformDetails>());
 
-        AlignPlatforms(CurrentPlatforms._instance.GetPlatformDetails());
+        AlignPlatforms(CurrentPlatforms._instance.GetPlatformDetails(CurrentPlatforms._instance.GetPlatformCount() - 1 - platformCount - 2, platformCount + 1 + 2));
+    }
+
+    public void CreateEnd(int platformCount)
+    {
+        PlatformDetails[] platforms = createplatforms(platformCount);
+        uint phaseBallCount = 0;
+
+        foreach (PlatformDetails platform in platforms)
+        {
+            platform.transform.SetParent(this.parentOfPlatforms);
+            CurrentPlatforms._instance.AddPlatform(platform);
+            phaseBallCount += platform.ballCount;
+        }
+
+        GameObject phaseEnd = Instantiate(this.phasePlatform);
+        phaseEnd.transform.SetParent(this.parentOfPlatforms);
+        phaseEnd.GetComponent<PhasePlatformController>().setBallInPhase(phaseBallCount);
+        CurrentPlatforms._instance.AddPlatform(phaseEnd.GetComponent<PlatformDetails>());
+
+        GameObject nextLevel = Instantiate(this.startPlatform);
+        nextLevel.transform.SetParent(this.parentOfPlatforms);
+        CurrentPlatforms._instance.AddPlatform(nextLevel.GetComponent<PlatformDetails>());
+
+        AlignPlatforms(CurrentPlatforms._instance.GetPlatformDetails(CurrentPlatforms._instance.GetPlatformCount() - 1 - platformCount - 2, platformCount + 1 + 2));
     }
 
     private PlatformDetails[] createplatforms(int count)

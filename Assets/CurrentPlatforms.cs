@@ -41,6 +41,15 @@ public class CurrentPlatforms : MonoBehaviour
         return this.platforms.ToArray();
     }
 
+    public PlatformDetails[] GetPlatformDetails(int start, int end)
+    {
+        return this.platforms.GetRange(start, end).ToArray();
+    }
+
+    public int GetPlatformCount()
+    {
+        return this.platforms.Count;
+    }
 
 
     // Start is called before the first frame update

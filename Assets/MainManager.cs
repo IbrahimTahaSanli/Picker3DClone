@@ -15,6 +15,8 @@ public class MainManager : MonoBehaviour
 
     [SerializeField] private GameObject startCanvas;
     [SerializeField] private GameObject inGameCanvas;
+    [SerializeField] private GameObject failCanvas;
+
 
 
     [SerializeField] private Transform thingy;
@@ -27,6 +29,7 @@ public class MainManager : MonoBehaviour
         StartScreen = 0,
         InGame = 1,
         InCheckpoint = 2,
+        Fail = 3,
     }
 
     private ControlScheme currentControlScheme;
@@ -40,9 +43,20 @@ public class MainManager : MonoBehaviour
 
     private IEnumerator WaitForCheckpoint(GameObject checkpoint)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(5);
+        PhasePlatformController controller = checkpoint.transform.parent.GetComponent<PhasePlatformController>();
 
-        checkpoint.transform.parent.GetComponent<PlatformDetails>().StartAnim();
+        if (controller.IsPhasePassed)
+        {
+            checkpoint.transform.parent.GetComponent<PlatformDetails>().StartAnim();
+            yield return new WaitForSeconds(1);
+            this.currentControlScheme = ControlScheme.InGame;
+        }
+        else
+        {
+            failCanvas.SetActive(true);
+            this.currentControlScheme = ControlScheme.Fail;
+        }
 
     }
 
@@ -85,11 +99,35 @@ public class MainManager : MonoBehaviour
                 this.thingy.position = Vector3.Lerp(this.thingy.position, new Vector3(this.thingy.position.x + this.thingyXSpeed, this.thingy.position.y, thingyMoveAreaWidth * this.inputPosInX), Time.deltaTime * this.thingyGeneralSpeed);
                 this.camera.transform.position = new Vector3(this.thingy.position.x + this.thingyXSpeed - this.cameraXPos, this.camera.transform.position.y, this.camera.transform.position.z);
                 break;
+
+            case ControlScheme.Fail:
+#if UNITY_EDITOR
+                if (Input.GetMouseButtonDown(0))
+#elif UNITY_ANDROID
+                if (Input.touchCount > 0)
+#endif
+                {
+                    this.startGame();
+
+                    this.currentControlScheme = ControlScheme.InGame;
+                }
+                break;
+
             default:
                 break;
         }
     }
 
+
+    private void restartGame()
+    {
+        this.clearLevel();
+    }
+
+    private void clearLevel()
+    {
+
+    }
 
     private void startGame()
     {

@@ -8,6 +8,7 @@ public class BallTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        other.GetComponent<PhasePlatformController>().AddBall((uint)scoreMultiplier);
         ScoreManager._instance.AddScore(scoreMultiplier);
     }
 }
