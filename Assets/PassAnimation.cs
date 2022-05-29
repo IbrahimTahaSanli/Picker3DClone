@@ -16,11 +16,12 @@ public class PassAnimation : AnimAbstractClass
 
     private IEnumerator openAnim()
     {
-        Vector3 firstVector = this.transform.rotation.eulerAngles;
+        Quaternion firstVector = Quaternion.Euler( this.transform.localRotation.eulerAngles);
+        Quaternion endAnimVector = Quaternion.Euler(this.EndAnimVector);
 
         for (float current = 0.0f; current < 1.0f; current += Time.deltaTime)
         {
-            this.transform.eulerAngles = Vector3.Lerp(firstVector, EndAnimVector, current);
+            this.transform.localRotation = Quaternion.Lerp(firstVector, endAnimVector, current);
             yield return new WaitForEndOfFrame();
         }
 

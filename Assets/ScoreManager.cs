@@ -18,7 +18,7 @@ public class ScoreManager : MonoBehaviour
         _instance = this;
 
 
-        this.ScoreAddedEvents = new Dictionary<ScoreAddedEvent, bool>();
+        this.MaxScoreChangedEvents = new Dictionary<MaxScoreChangedEvent, bool>();
         this.AddMaxScoreChangedChangeEvent(
             (val) => {
                 this.maxScore = val;
@@ -26,7 +26,7 @@ public class ScoreManager : MonoBehaviour
                 }
         );
 
-        this.MaxScoreChangedEvents = new Dictionary<MaxScoreChangedEvent, bool>();
+        this.ScoreAddedEvents = new Dictionary<ScoreAddedEvent, bool>();
         this.AddScoreChangeEvent(
             (val) => {
                 if (this.maxScore < val)
@@ -49,7 +49,7 @@ public class ScoreManager : MonoBehaviour
     private Dictionary<MaxScoreChangedEvent, bool> MaxScoreChangedEvents;
     public void AddMaxScoreChangedChangeEvent(MaxScoreChangedEvent even, bool isSuspended = false)
     {
-        MaxScoreChangedEvents[even] = isSuspended;
+        MaxScoreChangedEvents.Add(even, isSuspended);
     }
     public void SetSuppressionMaxScoreChangedEvent(MaxScoreChangedEvent even, bool isSuspended)
     {
@@ -64,8 +64,8 @@ public class ScoreManager : MonoBehaviour
     {
         this.maxScore = val;
 
-        foreach (var elem in this.ScoreAddedEvents.Keys)
-            if (!this.ScoreAddedEvents[elem])
+        foreach (var elem in this.MaxScoreChangedEvents.Keys)
+            if (!this.MaxScoreChangedEvents[elem])
                 elem(val);
     }
     #endregion
@@ -76,7 +76,7 @@ public class ScoreManager : MonoBehaviour
     private Dictionary<ScoreAddedEvent, bool> ScoreAddedEvents;
     public void AddScoreChangeEvent(ScoreAddedEvent even, bool isSuspended = false)
     {
-        ScoreAddedEvents[even] = isSuspended;
+        ScoreAddedEvents.Add(even, isSuspended);
     }
     public void SetSuppressionScoreChangeEvent(ScoreAddedEvent even, bool isSuspended)
     {
@@ -93,7 +93,7 @@ public class ScoreManager : MonoBehaviour
 
         foreach (var elem in this.ScoreAddedEvents.Keys)
             if (! this.ScoreAddedEvents[elem])
-                elem(val);
+                elem(this.score);
     }
     #endregion
 }

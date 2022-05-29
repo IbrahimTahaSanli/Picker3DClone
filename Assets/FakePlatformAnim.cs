@@ -16,11 +16,12 @@ public class FakePlatformAnim : AnimAbstractClass
 
     private IEnumerator closeAnim()
     {
-        Vector3 firstVector = this.transform.position;
+        Vector3 firstVector = this.transform.localPosition;
+
 
         for (float current = 0.0f; current < 1.0f; current += Time.deltaTime)
         {
-            this.transform.position = Vector3.Lerp(firstVector, EndAnimVector, current);
+            this.transform.localPosition = Vector3.Lerp(firstVector, EndAnimVector, current);
             yield return new WaitForEndOfFrame();
         }
 
