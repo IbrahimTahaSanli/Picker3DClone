@@ -52,12 +52,42 @@ public class CurrentPlatforms : MonoBehaviour
     }
 
 
-    // Start is called before the first frame update
-    void Start()
+    public void Awake()
     {
         _instance = this;
 
         this.PlatformAddedEvents = new Dictionary<PlatformAddedEvent, bool>();
+        
+    }
+    public void DestroyLevel(int count)
+    {
+        int listCount = platforms.Count;
+
+        for (int i = 0; i < listCount; i++)
+        {
+            if (platforms[0].style == PlatformDetails.PlatformStyle.NextLevel)
+            {
+                count--;
+                platforms[0].style = PlatformDetails.PlatformStyle.Empty;
+            }
+
+            if (count == 0)
+                break;
+
+            GameObject.Destroy(platforms[0].gameObject, 1);
+            platforms.Remove(platforms[0]);
+        }
+
+    }
+
+    public void Restart()
+    {
+        int listCount = platforms.Count;
+        for (int i = 0; i < listCount; i++)
+        {
+            GameObject.DestroyImmediate(platforms[0].gameObject);
+            platforms.Remove(platforms[0]);
+        }
     }
 
 }

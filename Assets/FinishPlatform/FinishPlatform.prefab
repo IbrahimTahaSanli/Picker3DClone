@@ -430,8 +430,8 @@ GameObject:
   - component: {fileID: 1541369405908574069}
   - component: {fileID: 2842021008441991128}
   m_Layer: 9
-  m_Name: PhaseFinish
-  m_TagString: Phase
+  m_Name: Finish
+  m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -748,8 +748,8 @@ GameObject:
   - component: {fileID: 4489057408744219744}
   - component: {fileID: 3681804480736317288}
   m_Layer: 0
-  m_Name: PhasePlatform
-  m_TagString: Phase
+  m_Name: FinishPlatform
+  m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -809,7 +809,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a1b78af3426e8db4b99befce03b3443b, type: 2}
+  - {fileID: 2100000, guid: 41b7a043f12d1cc4e9349487decc49df, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

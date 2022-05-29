@@ -28,7 +28,7 @@ public class PlatformDetails : MonoBehaviour
         Sin = 1,
         Cos = 2,
 
-       
+        NextLevel = 95,
         StartPlatform = 96,
         PhasePlatform = 97,
         FinishPlatform = 98,

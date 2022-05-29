@@ -494,12 +494,15 @@ MonoBehaviour:
   thingyGeneralSpeed: 2
   thingyMoveAreaWidth: 12
   thingyXSpeed: 3
+  thingyStartPosition: {x: -10.21, y: 1.4, z: 0}
   startCanvas: {fileID: 2106916055}
   inGameCanvas: {fileID: 767136035}
   failCanvas: {fileID: 420565311}
   thingy: {fileID: 2029455376}
   camera: {fileID: 963194227}
   cameraXPos: 25.21
+  PhaseCount: 3
+  PlatformCount: 3
 --- !u!1 &179507172
 GameObject:
   m_ObjectHideFlags: 0
@@ -1027,6 +1030,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxScoreText: {fileID: 1825694396}
   ScoreText: {fileID: 247717440}
+  MaxScoreLabel: 
+  ScoreLabel: 
 --- !u!1 &489777950
 GameObject:
   m_ObjectHideFlags: 0
@@ -2330,10 +2335,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentOfPlatforms: {fileID: 534472076}
-  platformPrefab: {fileID: 1649125232977655994, guid: e4f135f3ff8219d4cbadf7fd518993d6, type: 3}
   startPlatform: {fileID: 1215188161585252875, guid: c6e76041d58abee4bbf7989bc221416d, type: 3}
+  platformPrefab: {fileID: 1649125232977655994, guid: e4f135f3ff8219d4cbadf7fd518993d6, type: 3}
   phasePlatform: {fileID: 8679669542613088496, guid: 6d92f91ce8529824486c995ccc375cae, type: 3}
-  finishPlatform: {fileID: 0}
+  finishPlatform: {fileID: 8679669542613088496, guid: 58456067fb099014995881ba4f1ff759, type: 3}
+  nextLevelPlatform: {fileID: 1215188161585252875, guid: 00a5b35bab2abd544b66ffa34fd5ed55, type: 3}
 --- !u!114 &1558435595
 MonoBehaviour:
   m_ObjectHideFlags: 0

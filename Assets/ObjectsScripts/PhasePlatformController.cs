@@ -32,6 +32,8 @@ public class PhasePlatformController : AnimAbstractClass
     {
         BallInPhaseCount = i;
 
+        IsPhasePassed = i == 0 ? true : false;
+
         neededCount = (uint)Mathf.FloorToInt(BallInPhaseCount * difficulty);
 
         this.NeededBall.text = neededCount.ToString();

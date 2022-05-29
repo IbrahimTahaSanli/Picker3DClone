@@ -42,6 +42,11 @@ public class ScoreManager : MonoBehaviour
 
     }
 
+    public void Restart()
+    {
+        this.AddScore(-this.score);
+    }
+
     #region MaxScoreChangedEvent
 
     public delegate void MaxScoreChangedEvent(int changedScore);

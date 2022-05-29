@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,8 +13,12 @@ public class MainManager : MonoBehaviour
     [SerializeField] private float thingyGeneralSpeed;
     [SerializeField] private float thingyMoveAreaWidth;
     [SerializeField] private float thingyXSpeed;
+    [SerializeField] private Vector3 thingyStartPosition;
 
     [SerializeField] private GameObject startCanvas;
+
+
+
     [SerializeField] private GameObject inGameCanvas;
     [SerializeField] private GameObject failCanvas;
 
@@ -24,12 +29,18 @@ public class MainManager : MonoBehaviour
     [SerializeField] private Camera camera;
     [SerializeField] private float cameraXPos;
 
+    [SerializeField] private int PhaseCount;
+    [SerializeField] private int PlatformCount;
+
+
     private enum ControlScheme
     {
         StartScreen = 0,
         InGame = 1,
         InCheckpoint = 2,
         Fail = 3,
+        InFinish = 4,
+        Finished = 5,
     }
 
     private ControlScheme currentControlScheme;
@@ -41,6 +52,13 @@ public class MainManager : MonoBehaviour
         StartCoroutine(this.WaitForCheckpoint(checkpoint));
     }
 
+    public void ThingyGetIntoFinish(GameObject checkpoint)
+    {
+        this.currentControlScheme = ControlScheme.InFinish;
+
+        StartCoroutine(this.WaitForFinish(checkpoint));
+    }
+
     private IEnumerator WaitForCheckpoint(GameObject checkpoint)
     {
         yield return new WaitForSeconds(5);
@@ -48,6 +66,26 @@ public class MainManager : MonoBehaviour
 
         if (controller.IsPhasePassed)
         {
+            checkpoint.transform.parent.GetComponent<PlatformDetails>().StartAnim();
+            yield return new WaitForSeconds(1);
+            this.currentControlScheme = ControlScheme.InGame;
+        }
+        else
+        {
+            failCanvas.SetActive(true);
+            this.currentControlScheme = ControlScheme.Fail;
+        }
+
+    }
+
+    private IEnumerator WaitForFinish(GameObject checkpoint)
+    {
+        yield return new WaitForSeconds(5);
+        PhasePlatformController controller = checkpoint.transform.parent.GetComponent<PhasePlatformController>();
+
+        if (controller.IsPhasePassed)
+        {
+            this.nextLevel();
             checkpoint.transform.parent.GetComponent<PlatformDetails>().StartAnim();
             yield return new WaitForSeconds(1);
             this.currentControlScheme = ControlScheme.InGame;
@@ -107,7 +145,7 @@ public class MainManager : MonoBehaviour
                 if (Input.touchCount > 0)
 #endif
                 {
-                    this.startGame();
+                    this.restartGame();
 
                     this.currentControlScheme = ControlScheme.InGame;
                 }
@@ -118,23 +156,31 @@ public class MainManager : MonoBehaviour
         }
     }
 
-
-    private void restartGame()
-    {
-        this.clearLevel();
-    }
-
-    private void clearLevel()
-    {
-
-    }
-
     private void startGame()
     {
         startCanvas.SetActive(false);
         inGameCanvas.SetActive(true);
 
-        LevelCreator._instance.CreateLevel(3,5);
+        LevelCreator._instance.CreateLevel(this.PhaseCount,this.PlatformCount);
     }
+
+    private void nextLevel()
+    {
+        LevelCreator._instance.CreateLevel(this.PhaseCount, this.PlatformCount);
+    }
+
+    private void restartGame()
+    {
+        CurrentPlatforms._instance.Restart();
+        
+        LevelCreator._instance.CreateStart();
+        LevelCreator._instance.CreateLevel(this.PhaseCount, this.PlatformCount);
+        
+        this.thingy.position = this.thingyStartPosition;
+        ScoreManager._instance.Restart();
+
+        this.failCanvas.SetActive(false);
+    }
+
 
 }
